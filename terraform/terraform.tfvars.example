@@ -1,3 +1,4 @@
-region       = "us-east-1"
-allowed_cidr = "203.0.113.10/32" # replace with: curl -s https://checkip.amazonaws.com
-reader_count = 0                 
+region         = "eu-west-1"
+allowed_cidr   = "62.8.92.186/32"
+instance_class = "db.t4g.large"
+reader_count   = 1
