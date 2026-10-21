@@ -1,0 +1,6 @@
+.terraform/
+*.tfstate*
+terraform.tfvars
+.terraform.lock.hcl
+__pycache__/
+results/*.csv
