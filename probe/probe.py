@@ -107,8 +107,14 @@ def main():
     writer = Conn(a.writer_host, a.user, password, a.db, a.timeout)
     reader = Conn(reader_host, a.user, password, a.db, a.timeout)
 
-    with writer.get().cursor() as cur:
-        cur.execute(SETUP_SQL)
+        # The table already exists after the first run, so a failed setup
+    # connection must not stop the probe: log it and start measuring.
+    try:
+        with writer.get().cursor() as cur:
+            cur.execute(SETUP_SQL)
+    except Exception as e:  # noqa: BLE001
+        writer.reset()
+        print(f"setup skipped, writer unreachable at start: {e}", flush=True)
 
     signal.signal(signal.SIGINT, stop)
     signal.signal(signal.SIGTERM, stop)
